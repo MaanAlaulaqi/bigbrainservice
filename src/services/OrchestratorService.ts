@@ -4,6 +4,7 @@ import { ConversationStore } from "./ConversationStore";
 import { LLMClient } from "./LLMClient";
 import { RetrieverService } from "./RetrieverService";
 import { PromptBuilderService } from "./PromptBuilderService";
+import { env } from "../env";
 
 type StreamEvent =
   | { type: "assistant_start"; data: { messageId: string; conversationId: string } }
@@ -24,7 +25,9 @@ export class OrchestratorService {
     const conversationId = args.conversationId ?? await this.convo.createConversation(args.auth);
     const history = await this.convo.getRecentMessages(conversationId, args.auth);
 
-    const snippets = await this.retriever.retrieve(args.auth, args.userText, 6);
+const snippets = env.RAG_ENABLED === "true"
+  ? await this.retriever.retrieve(args.auth, args.userText, 6)
+  : [];
     const contextBlock = this.prompts.buildContextBlock(snippets);
 
     const system = this.prompts.constitution();
