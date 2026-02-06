@@ -1,0 +1,32 @@
+    # Ignore compiled executables and object files
+*.o
+*.exe
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+temp/
+
+# Ignore Node.js modules
+node_modules/
+
+# Ignore Python virtual environments
+venv/
+
+# Ignore sensitive configuration files
+config.ini
+.env
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+mock-data.json
+sessions-service-*
+
+# Exception: don't ignore important.log even if other .log files are ignored
+!important.log
+
+# uploads folder 
+uploads/
