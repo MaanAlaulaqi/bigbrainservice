@@ -52,7 +52,9 @@ const snippets = env.RAG_ENABLED === "true"
 
     const history = await this.convo.getRecentMessages(conversationId, args.auth);
 
-    const snippets = await this.retriever.retrieve(args.auth, args.userText, 6);
+const snippets = env.RAG_ENABLED === "true"
+  ? await this.retriever.retrieve(args.auth, args.userText, 6)
+  : [];
     const contextBlock = this.prompts.buildContextBlock(snippets);
     const system = this.prompts.constitution();
 
